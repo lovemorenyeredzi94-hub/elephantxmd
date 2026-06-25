@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ELEPHANT-X MD— Pairing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#070b08;
+    --bg-soft:#0d140f;
+    --green:#1bd95f;
+    --green-deep:#0a7a35;
+    --gold:#fcd116;
+    --red:#d40000;
+    --ink:#eafff0;
+    --muted:#7fa389;
+    --card-line:rgba(27,217,95,0.18);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{height:100%;}
+  body{
+    background:
+      radial-gradient(circle at 18% 12%, rgba(27,217,95,0.10), transparent 40%),
+      radial-gradient(circle at 85% 80%, rgba(252,209,22,0.06), transparent 45%),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    min-height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+    overflow-x:hidden;
+  }
+
+  /* faint stepped silhouette referencing Great Zimbabwe's stone towers */
+  .ruins{
+    position:fixed; bottom:0; left:0; width:100%; height:140px;
+    background:repeating-linear-gradient(
+      to right,
+      transparent 0 60px,
+      rgba(27,217,95,0.05) 60px 64px
+    );
+    -webkit-mask-image: linear-gradient(to top, black, transparent);
+    mask-image: linear-gradient(to top, black, transparent);
+    pointer-events:none;
+  }
+  .ruins svg{position:absolute;bottom:0;width:100%;opacity:0.35;}
+
+  .stripe{position:fixed;top:0;left:0;width:100%;height:4px;display:flex;}
+  .stripe span{flex:1;height:100%;}
+  .stripe span:nth-child(1){background:var(--green);}
+  .stripe span:nth-child(2){background:var(--gold);}
+  .stripe span:nth-child(3){background:var(--red);}
+  .stripe span:nth-child(4){background:var(--gold);}
+  .stripe span:nth-child(5){background:var(--green);}
+
+  .card{
+    position:relative;
+    width:100%;
+    max-width:420px;
+    background:linear-gradient(180deg, var(--bg-soft), #060906);
+    border:1px solid var(--card-line);
+    border-radius:18px;
+    padding:36px 30px 30px;
+    box-shadow:0 0 60px rgba(27,217,95,0.08), 0 20px 60px rgba(0,0,0,0.5);
+  }
+
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--gold);
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:14px;
+  }
+  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:pulse 1.6s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+
+  h1{
+    font-family:'Orbitron',sans-serif;
+    font-weight:900;
+    font-size:28px;
+    line-height:1.15;
+    letter-spacing:0.01em;
+    background:linear-gradient(90deg, var(--ink), var(--green) 70%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    margin-bottom:6px;
+  }
+  .sub{color:var(--muted);font-size:13.5px;margin-bottom:28px;line-height:1.5;}
+  .sub b{color:var(--ink);}
+
+  label{
+    display:block;
+    font-size:12px;
+    letter-spacing:0.04em;
+    color:var(--muted);
+    margin-bottom:8px;
+    text-transform:uppercase;
+  }
+
+  .input-row{
+    display:flex;
+    align-items:center;
+    background:#0a120c;
+    border:1px solid var(--card-line);
+    border-radius:10px;
+    padding:0 14px;
+    transition:border-color .2s, box-shadow .2s;
+  }
+  .input-row:focus-within{border-color:var(--green); box-shadow:0 0 0 3px rgba(27,217,95,0.12);}
+  .input-row span{
+    font-family:'JetBrains Mono',monospace;
+    color:var(--green);
+    font-size:15px;
+    padding-right:6px;
+    border-right:1px solid var(--card-line);
+    margin-right:10px;
+  }
+  input[type=tel]{
+    flex:1;
+    background:transparent;
+    border:none;
+    outline:none;
+    color:var(--ink);
+    font-family:'JetBrains Mono',monospace;
+    font-size:15px;
+    padding:14px 0;
+    letter-spacing:0.02em;
+  }
+  input::placeholder{color:#3d5444;}
+
+  .hint{font-size:11.5px;color:var(--muted);margin-top:8px;}
+
+  button{
+    width:100%;
+    margin-top:20px;
+    padding:15px;
+    border:none;
+    border-radius:10px;
+    font-family:'Inter',sans-serif;
+    font-weight:700;
+    font-size:14.5px;
+    letter-spacing:0.02em;
+    color:#04140a;
+    background:linear-gradient(90deg, var(--green), #58e88a);
+    cursor:pointer;
+    transition:transform .15s, box-shadow .15s, opacity .15s;
+    box-shadow:0 8px 24px rgba(27,217,95,0.25);
+  }
+  button:hover:not(:disabled){transform:translateY(-1px); box-shadow:0 12px 30px rgba(27,217,95,0.35);}
+  button:disabled{opacity:0.55; cursor:not-allowed;}
+
+  .result{
+    margin-top:26px;
+    display:none;
+  }
+  .result.show{display:block;}
+  .code-label{font-size:11.5px; color:var(--muted); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:10px;}
+  .code-box{
+    font-family:'JetBrains Mono',monospace;
+    font-size:34px;
+    font-weight:700;
+    letter-spacing:0.06em;
+    text-align:center;
+    color:var(--ink);
+    background:#0a120c;
+    border:1px solid var(--green);
+    border-radius:12px;
+    padding:18px 10px;
+    box-shadow:0 0 30px rgba(27,217,95,0.18) inset, 0 0 24px rgba(27,217,95,0.18);
+  }
+  .steps{margin-top:18px; font-size:13px; color:var(--muted); line-height:1.7;}
+  .steps b{color:var(--ink);}
+
+  .session-box{
+    width:100%;
+    min-height:120px;
+    resize:vertical;
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    line-height:1.5;
+    color:var(--ink);
+    background:#0a120c;
+    border:1px solid var(--green);
+    border-radius:12px;
+    padding:14px;
+    box-shadow:0 0 30px rgba(27,217,95,0.18) inset, 0 0 24px rgba(27,217,95,0.18);
+    word-break:break-all;
+  }
+  .copy-btn{
+    margin-top:10px;
+    background:linear-gradient(90deg, var(--gold), #ffe98a);
+    color:#231a00;
+    box-shadow:0 8px 24px rgba(252,209,22,0.2);
+  }
+
+  .status{
+    margin-top:16px;
+    font-size:12.5px;
+    text-align:center;
+    color:var(--muted);
+    min-height:18px;
+  }
+  .status.err{color:#ff6464;}
+  .status.ok{color:var(--green);}
+
+  footer{
+    margin-top:26px;
+    text-align:center;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.06em;
+    color:var(--muted);
+  }
+  footer .flag{margin:0 4px;}
+</style>
+</head>
+<body>
+
+<div class="stripe"><span></span><span></span><span></span><span></span><span></span></div>
+<div class="ruins"><svg viewBox="0 0 1200 140" preserveAspectRatio="none"><polygon points="0,140 0,60 40,60 40,30 80,30 80,60 130,60 130,10 180,10 180,60 230,60 230,40 280,40 280,60 340,60 340,20 390,20 390,60 450,60 450,50 500,50 500,60 1200,60 1200,140" fill="#1bd95f"/></svg></div>
+
+<div class="card">
+  <div class="eyebrow"><span class="dot"></span>ICON-X MD TECH</div>
+  <h1>ELEPHANT-X MD</h1>
+  <p class="sub">Pair your WhatsApp number to generate a <b>session ID</b>. Enter your number in <b>international format</b>, starting with your country code — no plus sign, no spaces.</p>
+
+  <label for="number">WhatsApp Number</label>
+  <div class="input-row">
+    <span>+</span>
+    <input type="tel" id="number" placeholder="263771234567" inputmode="numeric" autocomplete="off">
+  </div>
+  <p class="hint">Zimbabwe example: 263 followed by your number, e.g. 263771234567</p>
+
+  <button id="pairBtn" onclick="requestPairing()">Generate Pairing Code</button>
+
+  <div class="status" id="status"></div>
+
+  <div class="result" id="result">
+    <div class="code-label">Your Pairing Code</div>
+    <div class="code-box" id="codeBox">— — — —</div>
+    <div class="steps">
+      <b>1.</b> Open WhatsApp on your phone<br>
+      <b>2.</b> Go to <b>Settings → Linked Devices → Link a Device</b><br>
+      <b>3.</b> Tap <b>Link with phone number instead</b><br>
+      <b>4.</b> Enter the code above exactly as shown<br>
+      <b>5.</b> Wait here — your session ID appears below automatically
+    </div>
+  </div>
+
+  <div class="result" id="sessionResult">
+    <div class="code-label">Your Session ID</div>
+    <textarea id="sessionBox" class="session-box" readonly></textarea>
+    <button id="copyBtn" class="copy-btn" onclick="copySession()">Copy Session ID</button>
+    <div class="steps">
+      <b>Next:</b> deploy this same project to Render, Katabump, or Railway,
+      and paste this whole string as the <b>SESSION_ID</b> environment
+      variable. The bot will boot already connected — no pairing needed there.
+    </div>
+  </div>
+
+  <footer>POWERED BY ICON-X MD TECH<span class="flag">🇿🇼</span>ZIMBABWE</footer>
+</div>
+
+<script>
+  // ⚠️ EDIT THIS before deploying to Vercel: point it at your Render backend URL.
+  // Example: 'https://elephantxmd.onrender.com'
+  const API_BASE_URL = 'https://elephantxmd.onrender.com';
+
+  const btn = document.getElementById('pairBtn');
+  const statusEl = document.getElementById('status');
+  const resultEl = document.getElementById('result');
+  const codeBox = document.getElementById('codeBox');
+  const sessionResultEl = document.getElementById('sessionResult');
+  const sessionBox = document.getElementById('sessionBox');
+
+  let pollTimer = null;
+
+  function setStatus(msg, type){
+    statusEl.textContent = msg;
+    statusEl.className = 'status' + (type ? ' ' + type : '');
+  }
+
+  function stopPolling(){
+    if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
+  }
+
+  async function showSessionId(){
+    try {
+      const res = await fetch(API_BASE_URL + '/api/session');
+      const data = await res.json();
+      if (data.success && data.sessionId) {
+        sessionBox.value = data.sessionId;
+        sessionResultEl.classList.add('show');
+        setStatus('✅ Connected — your session ID is ready below.', 'ok');
+        return true;
+      }
+    } catch (err) {}
+    return false;
+  }
+
+  function pollUntilConnected(){
+    let attempts = 0;
+    pollTimer = setInterval(async () => {
+      attempts++;
+      try {
+        const res = await fetch(API_BASE_URL + '/api/status');
+        const data = await res.json();
+        if (data.connected) {
+          stopPolling();
+          await showSessionId();
+        } else if (attempts > 40) { // ~2 minutes at 3s intervals
+          stopPolling();
+          setStatus('Still waiting on the link — if you already entered the code, give it a few more seconds, or refresh and try again.', 'err');
+        }
+      } catch (err) {
+        // ignore transient network errors while polling
+      }
+    }, 3000);
+  }
+
+  function copySession(){
+    sessionBox.select();
+    sessionBox.setSelectionRange(0, 99999);
+    navigator.clipboard.writeText(sessionBox.value).then(() => {
+      const copyBtn = document.getElementById('copyBtn');
+      const original = copyBtn.textContent;
+      copyBtn.textContent = '✅ Copied!';
+      setTimeout(() => { copyBtn.textContent = original; }, 1800);
+    }).catch(() => {
+      setStatus('Could not copy automatically — select the text and copy manually.', 'err');
+    });
+  }
+
+  async function requestPairing(){
+    const raw = document.getElementById('number').value.trim();
+    const number = raw.replace(/[^0-9]/g, '');
+
+    if (!/^[0-9]{10,15}$/.test(number)) {
+      setStatus('Enter a valid number with country code, e.g. 263771234567', 'err');
+      return;
+    }
+    if (API_BASE_URL.includes('YOUR-RENDER-APP-NAME')) {
+      setStatus('Backend URL not configured yet — edit API_BASE_URL in this page.', 'err');
+      return;
+    }
+
+    stopPolling();
+    btn.disabled = true;
+    btn.textContent = 'Connecting…';
+    setStatus('Requesting pairing code from the server…');
+    resultEl.classList.remove('show');
+    sessionResultEl.classList.remove('show');
+
+    try {
+      const res = await fetch(API_BASE_URL + '/api/pair', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ number })
+      });
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        setStatus(data.message || 'Pairing failed. Try again.', 'err');
+      } else if (data.alreadyConnected) {
+        setStatus('This bot is already connected — fetching session ID…', 'ok');
+        await showSessionId();
+      } else {
+        codeBox.textContent = data.code;
+        resultEl.classList.add('show');
+        setStatus('Code generated — link it within 60 seconds. Waiting for connection…');
+        pollUntilConnected();
+      }
+    } catch (err) {
+      setStatus('Could not reach the backend. Check the server is awake and API_BASE_URL is correct.', 'err');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Generate Pairing Code';
+    }
+  }
+
+  document.getElementById('number').addEventListener('keydown', e => {
+    if (e.key === 'Enter') requestPairing();
+  });
+</script>
+</body>
+</html>
