@@ -1,0 +1,33 @@
+{
+  "name": "elephant-x md",
+  "version": "1.0.0",
+  "description": "ELEPHANT- WhatsApp Multi-Device Bot powered by ICON-X MD TECH",
+  "main": "index.js",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "ICON-X MD Tech Zimbabwe",
+  "license": "MIT",
+  "dependencies": {
+    "@whiskeysockets/baileys": "^6.7.18",
+    "@hapi/boom": "^10.0.1",
+    "express": "^4.21.2",
+    "cors": "^2.8.5",
+    "pino": "^9.5.0",
+    "qrcode": "^1.5.4",
+    "axios": "^1.7.9",
+    "node-fetch": "^2.7.0",
+    "yt-search": "^2.12.1",
+    "@distube/ytdl-core": "^4.16.12",
+    "form-data": "^4.0.1",
+    "dotenv": "^16.4.7",
+    "wa-sticker-formatter": "^4.4.4",
+    "ffmpeg-static": "^5.2.0",
+    "sharp": "^0.33.5",
+    "mathjs": "^13.2.3"
+  }
+}
