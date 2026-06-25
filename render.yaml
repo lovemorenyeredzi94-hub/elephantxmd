@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: malvin-c-xmd
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: PREFIX
+        value: "."
+      - key: OWNER_NAME
+        value: "MR ELEPHANT"
+      - key: OWNER_NUMBER
+        value: "263000000000"
+      - key: SESSION_ID
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
